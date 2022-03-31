@@ -1,0 +1,86 @@
+<!--Concevons un script qui permet d’afficher une image en taille réelle au survol d’une vignette de celle-ci.
+La transcription papier ne rend pas le côté dynamique du script. Reportez-vous à l’espace de téléchargement pour en profiter pleinement.
+L’affichage initial, le curseur de la souris n’est pas au-dessus d’une image :
+-->
+<!doctype html> 
+<html lang="fr"> 
+<head> 
+<meta charset="utf-8"> 
+<title>Zoom</title> 
+<style> 
+    body { 
+        padding: 3px;  
+        margin: 0; 
+    } 
+    .container { 
+        position: absolute; 
+        top: 50px; 
+        left : 10px; 
+    } 
+    ul.thumb { 
+        padding: 0; 
+        list-style-type: none; 
+        margin: 0; 
+        width: 260px; 
+        float: left; 
+    } 
+    ul.thumb li { 
+        position: relative; 
+        padding: 0; 
+        margin: 0; 
+        width: 100px; 
+        height: 100px; 
+        float: left; 
+    } 
+    ul.thumb li img { 
+        position: absolute; 
+        padding : 0; 
+        width: 90px; 
+        height: 60px; 
+        left: 0; 
+        border: none; 
+    } 
+</style> 
+<script src="jquery.js"></script> 
+<script>  
+     //chargement de DOM et lancement de script
+    $(document).ready(function(){ 
+        //application d’un hover() sur la vignette.
+        $("ul.thumb li").hover(function() { 
+            //this réprésente l'élément courant
+            //Au survol de la vignette, la propriété de style z-index est modifiée (css({’z-index’ : ’10’})) pour faire passer l’image au premier plan. Ensuite une animation (animate()) modifie une série de paramètres.
+            $(this).css({'z-index' : '10'}); 
+            $(this).find('img').stop() 
+            .animate({ marginTop: '-90px',  
+                marginLeft: '-50px',  
+                top: '50%',  
+                left: '50%',  
+                width: '225px',  
+                height: '150px', 
+                }, 200);  
+        } , 
+        //Lorsque le curseur quitte l’image, la propriété de style z-index est rétablie à son état initial. Le script effectue également une animation (animate()) sur une série de paramètres.
+        function() { 
+            $(this).css({'z-index' : '0'}); 
+            $(this).find('img').stop() 
+            .animate({ marginTop: '0',  
+                marginLeft: '0', 
+                top: '0',  
+                left: '0',  
+                width: '90px',  
+                height: '60px',  
+                }, 400); 
+        }); 
+    }); 
+</script> 
+</head> 
+<body> 
+<p> Survolez la vignette pour agrandir l'image.</p> 
+<div class="container"> 
+    <ul class="thumb"> 
+        <li><img alt="" src="iceberg1.jpg"></li> 
+        <li><img alt="" src="iceberg2.jpg"></li> 
+    </ul> 
+</div> 
+</body> 
+</html>
